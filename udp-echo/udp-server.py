@@ -16,7 +16,7 @@ def threaded(c):
             break
 
         seq, stamp = data.decode('utf-8').split(",")
-        print(seq, stamp)
+        # print(seq, stamp)
 
         message = "{},{}".format(seq, time.time())
 
@@ -31,11 +31,11 @@ def Main():
     port = 12345
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((host, port))
-    # print("socket binded to port", port)
+    print("socket binded to port", port)
 
 	# put the socket into listening mode
     s.listen(5)
-    # print("socket is listening")
+    print("socket is listening")
 
 	# a forever loop until client wants to exit
     while True:
@@ -43,7 +43,7 @@ def Main():
         c, addr = s.accept()
 		# lock acquired by client
         print_lock.acquire()
-        # print('Connected to :', addr[0], ':', addr[1])
+        print('Connected to :', addr[0], ':', addr[1])
 		# Start a new thread and return its identifier
         start_new_thread(threaded, (c,))
     s.close()

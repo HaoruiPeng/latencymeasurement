@@ -8,14 +8,14 @@ def Send_Handler(s):
         stamp = time.time()
         seq_num += 1
         message = "{},{}".format(seq_num, stamp)
-        # message sent to server
+        print("send,"+message)
         s.send(message.encode('utf-8'))
         time.sleep(stamp+0.005-time.time())
 
 def Recv_Handler(s):
     while True:
         data = s.recv(1024)
-        print(str(data.decode('utf-8')))
+        print("rec,"+str(data.decode('utf-8')))
 
 def Main():
     host = '127.0.0.1'

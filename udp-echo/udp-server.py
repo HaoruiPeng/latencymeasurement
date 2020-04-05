@@ -14,13 +14,13 @@ def threaded(c):
 			# lock released on exit
             print_lock.release()
             break
-
-        seq, stamp = data.decode('utf-8').split(",")
+        try:
+            seq, stamp = data.decode('utf-8').split(",")
+            message = "{},{}".format(seq, time.time())
+            c.send(message.encode('utf-8'))
+        except:
+            pass
         # print(seq, stamp)
-
-        message = "{},{}".format(seq, time.time())
-
-        c.send(message.encode('utf-8'))
 
 	# connection closed
     c.close()

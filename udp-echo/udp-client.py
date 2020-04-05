@@ -16,11 +16,17 @@ def Send_Handler(s):
 
 def Recv_Handler(s):
     while True:
-        data = s.recv(1024)
-        print("rec,"+str(data.decode('utf-8')))
+        data = s.recv(1024).decode('utf-8')
+        stamp = str(time.time())
+        try:
+            seq, _ = str(data).split(",")
+            print("rec,"+seq+","+stamp)
+        except:
+            pass
 
 def Main():
-    host = '129.192.69.27'
+    # host = '129.192.69.27'
+    host = "130.235.202.196"
     port = 12345
     s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     s.connect((host,port))

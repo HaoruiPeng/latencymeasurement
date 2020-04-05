@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udp-latencymeasurement
+  labels:
+    apps: udp-measure
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      apps: udp-measure
+  template:
+    metadata:
+      labels:
+        apps: udp-measure
+    spec:
+      containers:
+        - name:  udp-server
+          image: registry.gitlab.com/haorui/docker_images/udp-server
+          ports:
+            - name: udp
+              containerPort: 12345
+              protocol: UDP
+            - name: tcp
+              containerPort: 12345
+              protocol: TCP
+            - name: udp-default
+              containerPort: 80
+              protocol: UDP
+            - name: tcp-default
+              containerPort: 80
+              protocol: UDP

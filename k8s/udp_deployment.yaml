@@ -24,15 +24,3 @@ spec:
             - name: tcp-default
               containerPort: 80
               protocol: TCP
-apiVersion: v1
-kind: Service
-metadata:
-  name: udp-latencymeasurement
-spec:
-  selector:
-    app: udp-measure
-  type: NodePort
-  ports:
-    - protocol: UDP
-      port: 12345
-      targetPort: 12345

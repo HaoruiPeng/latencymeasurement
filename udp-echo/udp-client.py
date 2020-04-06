@@ -28,9 +28,12 @@ def Recv_Handler(s):
 
 def Main():
     # host = '129.192.69.27'
+    host = "129.192.71.139"
     # host = "130.235.202.196"
-    host = "localhost"
-    port = 12345
+    # host = "localhost"
+    # host = "130.235.202.201"
+    # port = 12345
+    port = 31093
     s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     print("connect to socket")
     send = threading.Thread(target=Send_Handler, args=(s, (host, port),))

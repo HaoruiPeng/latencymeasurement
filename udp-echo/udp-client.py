@@ -2,21 +2,21 @@ import socket
 import time
 import threading
 
-def Send_Handler(s):
+def Send_Handler(s, addr):
     seq_num = 0
     while True:
         stamp = time.time()
         seq_num += 1
         message = "{},{}".format(seq_num, stamp)
         print("send,"+message)
-        s.send(message.encode('utf-8'))
+        s.sendto(message.encode('utf-8'), addr)
         pause = stamp+0.005-time.time()
         if pause > 0:
             time.sleep(pause)
 
-def Recv_Handler(s):
+def Recv_Handler(s, addr):
     while True:
-        data = s.recv(1024).decode('utf-8')
+        data = s.recvfrom(4096, addr).decode('utf-8')
         stamp = str(time.time())
         try:
             seq, _ = str(data).split(",")
@@ -26,13 +26,13 @@ def Recv_Handler(s):
 
 def Main():
     # host = '129.192.69.27'
-    host = "130.235.202.196"
+    # host = "130.235.202.196"
+    host = "localhost"
     port = 12345
     s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-    s.connect((host,port))
     print("connect to socket")
-    send = threading.Thread(target=Send_Handler, args=(s,))
-    recv = threading.Thread(target=Recv_Handler, args=(s,))
+    send = threading.Thread(target=Send_Handler, args=(s, (host, port),))
+    recv = threading.Thread(target=Recv_Handler, args=(s, (host, port),))
     send.start()
     recv.start()
     send.join()

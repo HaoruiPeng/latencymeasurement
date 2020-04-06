@@ -28,7 +28,7 @@ def Main():
     # host = '129.192.69.27'
     host = "130.235.202.196"
     port = 12345
-    s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     s.connect((host,port))
     print("connect to socket")
     send = threading.Thread(target=Send_Handler, args=(s,))

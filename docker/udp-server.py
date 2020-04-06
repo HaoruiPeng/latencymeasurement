@@ -29,7 +29,7 @@ def Main():
     host = "0.0.0.0"
 
     port = 12345
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind((host, port))
     print("socket binded to port", port)
 

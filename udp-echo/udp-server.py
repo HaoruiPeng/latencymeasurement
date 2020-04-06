@@ -20,7 +20,6 @@ def threaded(c):
             c.sendto(message.encode('utf-8'), addr)
         except:
             pass
-        # print(seq, stamp)
 
 	# connection closed
     c.close()

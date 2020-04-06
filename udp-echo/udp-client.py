@@ -14,10 +14,12 @@ def Send_Handler(s, addr):
         if pause > 0:
             time.sleep(pause)
 
-def Recv_Handler(s, addr):
+def Recv_Handler(s):
     while True:
-        data = s.recvfrom(4096, addr).decode('utf-8')
+        data, addr = s.recvfrom(4096)
+        data = data.decode('utf-8')
         stamp = str(time.time())
+        # print(data)
         try:
             seq, _ = str(data).split(",")
             print("rec,"+seq+","+stamp)
@@ -32,7 +34,7 @@ def Main():
     s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     print("connect to socket")
     send = threading.Thread(target=Send_Handler, args=(s, (host, port),))
-    recv = threading.Thread(target=Recv_Handler, args=(s, (host, port),))
+    recv = threading.Thread(target=Recv_Handler, args=(s, ))
     send.start()
     recv.start()
     send.join()

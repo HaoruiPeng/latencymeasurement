@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 def read_udp(file_path):
     with open(file_path, "r") as f:
         data_dict = {'send':{}, 'rec':{}}
-        data = pd.read_csv(file_path, sep=",", engine='python', error_bad_lines=False)
+        data = pd.read_csv(file_path, sep=",", engine='python', error_bad_lines=False, skiprows=1)
         data.columns=['mode', 'seq', 'stamp']
         for index, row in data.iterrows():
             data_dict[row['mode']][row['seq']] = row['stamp']
@@ -56,4 +56,4 @@ for i in range(2):
                 labels.append(dst)
     axes[i].boxplot(data, labels=labels, showfliers=False)
 
-plt.show()
+plt.savefig("udp-latency.png")

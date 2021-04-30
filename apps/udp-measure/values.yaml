@@ -1,0 +1,8 @@
+# Default values for udp-measure.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+serviceType: NodePort
+nodeSelector: k8s-4
+nodePort: 31234

@@ -54,6 +54,6 @@ for i in range(2):
                 # PING[cluster][dst] = (rtt_mean, rtt_conf)
                 data.append(rtt_array)
                 labels.append(dst)
-    axes[i].boxplot(data, labels=labels, showfliers=False)
+    axes[i].boxplot(data, labels=labels, showfliers=True)
 
-plt.savefig("udp-latency.png")
+plt.savefig("udp-latency-nofilter.png")

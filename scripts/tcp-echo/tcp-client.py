@@ -57,7 +57,7 @@ async def main(period):
         if ind >= 15000:
             break
         seq_no += 1
-        asyncio.sleep(0.002)
+        await asyncio.sleep(0.002)
         pending_tasks.add(asyncio.create_task(get_action(seq_no)))
         (done_tasks, pending_tasks) = await asyncio.wait(
                                     pending_tasks,

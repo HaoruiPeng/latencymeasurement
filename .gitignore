@@ -127,5 +127,19 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+<<<<<<< HEAD
 data/
 *pkl
+=======
+.DS_Store
+results/data/*
+results/data*
+*.icloud
+*.tex
+.dockerconfigjson
+regitery-credential.yaml
+*pkl
+*pkl
+*png
+*eps
+>>>>>>> 66604f8a30dfba4b6627320d11ee5ea454b24a41

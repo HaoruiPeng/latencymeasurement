@@ -39,7 +39,7 @@ async def get_action(seq_no):
 async def main(period):
     seq_no = 0
     pending_tasks = set()
-    sem = asyncio.Semaphore(500)
+    done_tasks = set()
     # SERVER_URL = 'http://130.235.202.199:31234'
     # SERVER_URL = 'http://130.235.202.199:8080'
     df_array = np.empty([15000, 2])
@@ -47,25 +47,23 @@ async def main(period):
     current_time = time.monotonic()
     next_step = current_time + period
     while True:
-        seq_no += 1
-        async with sem:
-            pending_tasks.add(asyncio.create_task(get_action(seq_no)))
-            diff = next_step - time.monotonic()
-            (done_tasks, pending_tasks) = await asyncio.wait(
-                                        pending_tasks,
-                                        return_when=asyncio.ALL_COMPLETED,
-                                        timeout=max(0, diff)
-                                        )
-            for task in done_tasks:
-                seq_num, delay = task.result()
-                df_array[ind] = [seq_num, delay]
-                ind += 1
-                if ind >= 10000:
-                    break
-        await asyncio.sleep(max(0, next_step - time.monotonic()))
         next_step += period
+        for task in done_tasks:
+            seq_num, delay = task.result()
+            df_array[ind] = [seq_num, delay]
+            ind += 1
+            if ind >= 15000:
+                break
         if ind >= 15000:
             break
+        seq_no += 1
+        asyncio.sleep(0.002)
+        pending_tasks.add(asyncio.create_task(get_action(seq_no)))
+        (done_tasks, pending_tasks) = await asyncio.wait(
+                                    pending_tasks,
+                                    return_when=asyncio.ALL_COMPLETED,
+                                    timeout=max(0, next_step - time.monotonic())
+                                    )
     return df_array
 
 

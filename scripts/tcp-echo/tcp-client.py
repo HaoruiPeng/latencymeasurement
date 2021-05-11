@@ -42,7 +42,7 @@ async def main(period):
     # SERVER_URL = 'http://130.235.202.199:31234'
     # SERVER_URL = 'http://130.235.202.199:8080'
     df_array = np.empty([15000, 2])
-    uf_array = np.empty([15000, 2])
+    uf_array = np.empty([15000, 4])
     ind = 0
     indu = 0
     current_time = time.monotonic()
@@ -60,7 +60,7 @@ async def main(period):
             break
         seq_no += 1
         await asyncio.sleep(0.002)
-        uf_array[indu] = [start_time, time.monotonic() - start_time]
+        uf_array[indu] = [start_time, time.monotonic() - start_time, len(pending_tasks), len(done_tasks)]
         indu += 1
         pending_tasks.add(asyncio.create_task(get_action(seq_no)))
         (done_tasks, pending_tasks) = await asyncio.wait(
@@ -77,7 +77,7 @@ if __name__ == "__main__":
     main_group = asyncio.gather(main(period))
     result = loop.run_until_complete(main_group)
     columns = ['seq_no', 'delay']
-    ucolumns = ['time', 'clien_execution']
+    ucolumns = ['time', 'clien_execution', 'pending', 'done']
     print(result)
     df = pd.DataFrame(result[0][0], columns=columns)
     uf = pd.DataFrame(result[0][1], columns=ucolumns)

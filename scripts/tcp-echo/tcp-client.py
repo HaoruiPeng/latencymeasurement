@@ -33,7 +33,6 @@ async def get_action(seq_no):
             r = await response.text()
             receive_time = time.monotonic()
             delay = receive_time - send_time
-            print(delay)
             return seq_no, delay
 
 async def main(period):
@@ -43,10 +42,13 @@ async def main(period):
     # SERVER_URL = 'http://130.235.202.199:31234'
     # SERVER_URL = 'http://130.235.202.199:8080'
     df_array = np.empty([15000, 2])
+    uf_array = np.empty([15000, 2])
     ind = 0
+    indu = 0
     current_time = time.monotonic()
-    next_step = current_time + period
+    next_step = current_time
     while True:
+        start_time = time.monotonic()
         next_step += period
         for task in done_tasks:
             seq_num, delay = task.result()
@@ -58,6 +60,7 @@ async def main(period):
             break
         seq_no += 1
         await asyncio.sleep(0.002)
+        uf_array[indu] = [start_time, time.monotonic() - start_time]
         pending_tasks.add(asyncio.create_task(get_action(seq_no)))
         (done_tasks, pending_tasks) = await asyncio.wait(
                                     pending_tasks,
@@ -73,6 +76,9 @@ if __name__ == "__main__":
     main_group = asyncio.gather(main(period))
     result = loop.run_until_complete(main_group)
     columns = ['seq_no', 'delay']
+    ucolumns = ['time', 'clien_execution']
     print(result)
-    df = pd.DataFrame(result[0], columns=columns)
-    df.to_pickle(result_dir + "/tcp_{}.pkl".format(serviceType))
+    df = pd.DataFrame(result[0][0], columns=columns)
+    uf = pd.DataFrame(result[0][1], columns=ucolumns)
+    df.to_pickle(result_dir + "/tcp_{}_delay.pkl".format(serviceType))
+    uf.to_pickle(result_dir + "/tcp_{}.pkl_execution".format(serviceType))

@@ -31,7 +31,7 @@ def Send_Handler(s, addr):
             break
     columns = ['seq_no', 'send_time']
     df = pd.DataFrame(send_array, columns=columns)
-    df.to_pickle(result_dir + "/udp_norport_send.pkl")
+    df.to_pickle(result_dir + "/udp_host_send.pkl")
 
 def Recv_Handler(s):
     rec_array = np.empty([10000, 2])
@@ -52,7 +52,7 @@ def Recv_Handler(s):
             break
     columns = ['seq_no', 'rec_time']
     df = pd.DataFrame(rec_array, columns=columns)
-    df.to_pickle(result_dir + "/udp_nodeport_rec.pkl")
+    df.to_pickle(result_dir + "/udp_host_rec.pkl")
 
 def Main():
     host = "130.235.202.199"

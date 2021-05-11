@@ -9,6 +9,7 @@ print_lock = threading.Lock()
 def threaded(c):
     while True:
         data, addr = c.recvfrom(4096)
+        print(data)
         if not data:
             pass
 			# lock released on exit

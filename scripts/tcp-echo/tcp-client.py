@@ -56,18 +56,19 @@ async def main(period):
             ind += 1
             if ind >= 15000:
                 break
-        if ind >= 15000:
+        if indu >= 150:
             break
         seq_no += 1
         asyncio.sleep(0.002)
         uf_array[indu] = [start_time, time.monotonic() - start_time]
+        indu += 1
         pending_tasks.add(asyncio.create_task(get_action(seq_no)))
         (done_tasks, pending_tasks) = await asyncio.wait(
                                     pending_tasks,
                                     return_when=asyncio.ALL_COMPLETED,
                                     timeout=max(0, next_step - time.monotonic())
                                     )
-    return df_array
+    return df_array, uf_array
 
 
 if __name__ == "__main__":

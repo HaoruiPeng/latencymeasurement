@@ -56,7 +56,7 @@ async def main(period):
             ind += 1
             if ind >= 15000:
                 break
-        if indu >= 150:
+        if indu >= 15000:
             break
         seq_no += 1
         await asyncio.sleep(0.002)
@@ -82,4 +82,4 @@ if __name__ == "__main__":
     df = pd.DataFrame(result[0][0], columns=columns)
     uf = pd.DataFrame(result[0][1], columns=ucolumns)
     df.to_pickle(result_dir + "/tcp_{}_delay.pkl".format(serviceType))
-    uf.to_pickle(result_dir + "/tcp_{}.pkl_execution".format(serviceType))
+    uf.to_pickle(result_dir + "/tcp_{}_execution.pkl".format(serviceType))

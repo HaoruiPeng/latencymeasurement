@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: udp-latencymeasurement
+  name: udp-measure
   labels:
     apps: udp-measure
 spec:
@@ -21,6 +21,3 @@ spec:
             - name: udp
               containerPort: 12345
               protocol: UDP
-            - name: tcp-default
-              containerPort: 80
-              protocol: TCP

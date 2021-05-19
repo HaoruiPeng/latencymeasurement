@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: udp-latencymeasurement
+  name: udp-measure
 spec:
   selector:
     app: udp-measure
@@ -10,3 +10,4 @@ spec:
     - protocol: UDP
       port: 12345
       targetPort: 12345
+      nodePort: 31234

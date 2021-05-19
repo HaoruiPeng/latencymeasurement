@@ -13,7 +13,8 @@ metadata:
 spec:
   type: {{.Values.serviceType}}
   ports:
-    - name: UDP
+    - name: udp
+      protocol: UDP
       port: 12345
       targetPort: 12345
       nodePort: {{.Values.nodePort}}
@@ -40,11 +41,7 @@ spec:
         - name: udp-server
           image: registry.gitlab.com/haorui/docker_images/udp-server
           ports:
-            - name: udp
-              containerPort: 12345
-              protocol: UDP
-            - name: tcp-default
-              containerPort: 80
-              protocol: TCP
+          - containerPort: 12345
+            protocol: UDP
       imagePullSecrets:
         - name: gitlab-auth

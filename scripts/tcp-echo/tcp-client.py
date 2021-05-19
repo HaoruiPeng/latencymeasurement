@@ -70,7 +70,6 @@ async def main(period):
                                     )
     return df_array, uf_array
 
-
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
     period = 0.02
